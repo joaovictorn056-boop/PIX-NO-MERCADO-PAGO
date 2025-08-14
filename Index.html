@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Copie o código Pix</title>
+  <style>
+    body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:#fff;color:#111}
+    .wrap{max-width:860px;margin:32px auto;padding:0 16px}
+    h1{font-size:20px;margin:0 0 12px}
+    pre{margin:0;white-space:pre-wrap;word-break:break-all;border:1px solid #e5e7eb;border-radius:12px;padding:16px;background:#fafafa;cursor:pointer}
+    .ok{margin-top:10px;font-size:14px;color:#16a34a;display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Copie o código abaixo ↓</h1>
+    <pre id="pix">00020126580014br.gov.bcb.pix0136859526fd-52ca-428d-9cd6-73ee6436b7e2520400005303986540520.005802BR5924Joao Victor Neves Das Vi6009Sao Paulo610901227-20062240520daqr25940552853524116304FD60</pre>
+    <div id="ok" class="ok">✅ Código Pix copiado!</div>
+  </div>
+
+  <script>
+    const el = document.getElementById("pix");
+    const ok = document.getElementById("ok");
+    const code = el.textContent.trim();
+
+    async function copy() {
+      try {
+        await navigator.clipboard.writeText(code);
+        ok.style.display = "block";
+      } catch {
+        // Fallback para navegadores sem Clipboard API
+        const ta = document.createElement("textarea");
+        ta.value = code; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); ok.style.display = "block"; }
+        catch { /* sem suporte, tudo bem */ }
+        document.body.removeChild(ta);
+      }
+    }
+
+    // Copiar ao clicar/tocar no código
+    el.addEventListener("click", copy);
+  </script>
+</body>
+</html>
